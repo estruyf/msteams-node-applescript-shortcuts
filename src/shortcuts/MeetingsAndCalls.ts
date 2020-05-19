@@ -10,7 +10,7 @@ export class MeetingsAndCalls {
   /**
    * Accept the incoming video call
    */
-  public static async accept(): Promise<void> {
+  public static async accept(): Promise<string> {
     try {
       return await this.runScript(`keystroke "a" using {shift down, command down}`);
     } catch (e) {
@@ -21,7 +21,7 @@ export class MeetingsAndCalls {
   /**
    * Tell MS Teams to mute
    */
-  public static async decline(): Promise<void> {
+  public static async decline(): Promise<string> {
     try {
       return await this.runScript(`keystroke "d" using {shift down, command down}`);
     } catch (e) {
@@ -32,7 +32,7 @@ export class MeetingsAndCalls {
   /**
    * Tell MS Teams to mute
    */
-  public static async mute(): Promise<void> {
+  public static async mute(): Promise<string> {
     try {
       return await this.runScript(`keystroke "m" using {shift down, command down}`);
     } catch (e) {
@@ -43,7 +43,7 @@ export class MeetingsAndCalls {
   /**
    * Tell MS Teams to turn camera on or off
    */
-  public static async camera(): Promise<void> {
+  public static async camera(): Promise<string> {
     try {
       return await this.runScript(`keystroke "o" using {shift down, command down}`);
     } catch (e) {
@@ -55,9 +55,8 @@ export class MeetingsAndCalls {
    * Run the Apple script
    * @param keystroke 
    */
-  private static runScript(keystroke: string): Promise<void>  {
-    console.log('runScript');
-    return new Promise<void>((resolve, reject) => {
+  private static runScript(keystroke: string): Promise<string>  {
+    return new Promise<string>((resolve, reject) => {
       const script = `
       tell application "Microsoft Teams"
         activate
@@ -73,7 +72,7 @@ export class MeetingsAndCalls {
         }
         
         console.log(rtn);
-        resolve();
+        resolve('Shortcut executed');
       });
     });
   }
