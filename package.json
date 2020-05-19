@@ -1,0 +1,28 @@
+{
+  "name": "msteams-node-applescript-shortcuts",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc",
+    "test": "npm run build && node ./dist/tests/tests.js",
+    "publish:next": "npm publish --tag next"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/estruyf/msteams-node-applescript-shortcuts"
+  },
+  "keywords": [
+    "Microsoft Teams",
+    "Shortcuts"
+  ],
+  "author": "Elio Struyf",
+  "license": "MIT",
+  "dependencies": {
+    "applescript": "1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "3.9.2"
+  }
+}
