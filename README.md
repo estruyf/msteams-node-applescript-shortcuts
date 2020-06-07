@@ -1,7 +1,7 @@
 # Execute Microsoft Teams shortcuts from Node.js via applescript
 
 ```
-npm i msteams-node-applescript-shortcuts@next
+npm i msteams-node-applescript-shortcuts
 ```
 
 ## Usage
