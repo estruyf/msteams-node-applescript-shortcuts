@@ -10,9 +10,9 @@ export class MeetingsAndCalls {
   /**
    * Accept the incoming video call
    */
-  public static async accept(): Promise<string> {
+  public static async accept(reactivate: boolean = false): Promise<string> {
     try {
-      return await this.runScript(`keystroke "a" using {shift down, command down}`);
+      return await this.runScript(`keystroke "a" using {shift down, command down}`, reactivate);
     } catch (e) {
       throw e;
     }
@@ -21,9 +21,9 @@ export class MeetingsAndCalls {
   /**
    * Tell MS Teams to mute
    */
-  public static async decline(): Promise<string> {
+  public static async decline(reactivate: boolean = false): Promise<string> {
     try {
-      return await this.runScript(`keystroke "d" using {shift down, command down}`);
+      return await this.runScript(`keystroke "d" using {shift down, command down}`, reactivate);
     } catch (e) {
       throw e;
     }
@@ -32,9 +32,9 @@ export class MeetingsAndCalls {
   /**
    * Tell MS Teams to mute
    */
-  public static async mute(): Promise<string> {
+  public static async mute(reactivate: boolean = false): Promise<string> {
     try {
-      return await this.runScript(`keystroke "m" using {shift down, command down}`);
+      return await this.runScript(`keystroke "m" using {shift down, command down}`, reactivate);
     } catch (e) {
       throw e;
     }
@@ -43,9 +43,9 @@ export class MeetingsAndCalls {
   /**
    * Tell MS Teams to turn camera on or off
    */
-  public static async camera(): Promise<string> {
+  public static async camera(reactivate: boolean = false): Promise<string> {
     try {
-      return await this.runScript(`keystroke "o" using {shift down, command down}`);
+      return await this.runScript(`keystroke "o" using {shift down, command down}`, reactivate);
     } catch (e) {
       throw e;
     }
@@ -55,15 +55,24 @@ export class MeetingsAndCalls {
    * Run the Apple script
    * @param keystroke 
    */
-  private static runScript(keystroke: string): Promise<string>  {
+  private static runScript(keystroke: string, reactivate: boolean = false): Promise<string>  {
     return new Promise<string>((resolve, reject) => {
       const script = `
+      ${ reactivate ? "set crntAppPath to (path to frontmost application as text)" : ""}
+
       tell application "Microsoft Teams"
         activate
         tell application "System Events"
           ${keystroke}
         end tell
-      end tell`;
+      end tell
+
+      ${ reactivate ? `
+      tell application crntAppPath
+        activate
+      end tell
+      ` : ""}
+      `;
 
       applescript.execString(script, (err, rtn) => {
         if (err) {
