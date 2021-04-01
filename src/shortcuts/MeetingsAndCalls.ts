@@ -19,7 +19,7 @@ export class MeetingsAndCalls {
   }
 
   /**
-   * Tell MS Teams to mute
+   * Decline the incoming video call
    */
   public static async decline(reactivate: boolean = false): Promise<string> {
     try {
